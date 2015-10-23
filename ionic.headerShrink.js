@@ -2,13 +2,13 @@ angular.module('ionic.ion.headerShrink', [])
 
 
 
-.directive('headerShrink', ['$document', function($document) {
+.directive('headerShrink', ['$document', '$ionicScrollDelegate', function($document, $ionicScrollDelegate) {
   var fadeAmt;
 
   return {
     restrict: 'A',
     link: function($scope, $element, $attr) {
-
+      var scrollHandle = $attr.headerShrink;
       var scrollContent = $element.find('ion-content');
       var y = 0;
       var prevY = 0;
@@ -23,7 +23,7 @@ angular.module('ionic.ion.headerShrink', [])
 
       scrollContent.on("scroll", function(e) {
 
-        var scrollTop = e.detail.scrollTop;
+        var scrollTop = $ionicScrollDelegate.$getByHandle(scrollHandle).getScrollPosition().top;
 
         // start after some offset
         if(scrollTop >= 25) {
